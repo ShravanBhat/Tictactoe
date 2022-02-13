@@ -1,19 +1,19 @@
 # Tictactoe
 
 ### Assumptions
-> Board will be standard 3x3
+- Board will be standard 3x3
 
 ### Files
-> tictacoe_2 player.py is 1.0 Release. It is a multiplayer game.<br/>
-> tictactoe_final.py is final Release.One can play with computer as well as with a human.
+- tictacoe_2 player.py is 1.0 Release. It is a multiplayer game.<br/>
+- tictactoe_final.py is final Release.One can play with computer as well as with a human.
 
 ### How to play
-> Clone the repo<br/>
-> Open the terminal<br/>
-> python tictactoc_final.py 
+- Clone the repo<br/>
+- Open the terminal<br/>
+- python tictactoc_final.py 
 
 ### Funtions
-> tictactoe_2 player.py
+- tictactoe_2 player.py
 ```
 main() : Takes player names
 play_game() : Main funtion which runs the flow of the game
@@ -25,7 +25,7 @@ is_grid_full() : Checks if the grid has ay empty space or not.If grid is full th
 print_scoreboard() : Prints the scoreboard containing player names and their respective scores
 repeat_game() : Repeat the game until user presses N
 ```
-> tictactoe_final.py
+- tictactoe_final.py
 ```
 main() : Take extra input of game_type. 1 means single player and 2 means 2 player
 If 2 is selected multiplayer logic as mentioned in 'tictactoe_2 player.py' is run
