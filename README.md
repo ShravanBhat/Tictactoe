@@ -4,8 +4,8 @@
 > Board will be standard 3x3
 
 ### Files
-> tictacoe_2 player.py is 1.0 Release. It is a multiplayer game
-> tictactoe_final.py is final Release.One can play with computer as well as with a human
+> tictacoe_2 player.py is 1.0 Release. It is a multiplayer game.
+> tictactoe_final.py is final Release.One can play with computer as well as with a human.
 
 ### How to play
 > Clone the repo
