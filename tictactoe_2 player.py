@@ -14,12 +14,12 @@ def select_letter(player1):
 
 
 #Check if board is full
-def is_board_full(board):
-    return board.count(" ")==0
+def is_grid_full(grid):
+    return grid.count(" ")==0
 
 #Insert a letter (X or O) in a specific position
-def insert_letter(board,letter,pos):
-    board[pos]=letter
+def insert_letter(grid,letter,pos):
+    grid[pos]=letter
 
 #Print the score board
 def print_scoreboard(score_board):
@@ -31,37 +31,37 @@ def print_scoreboard(score_board):
     print('{:<25} {}'.format(players[1], score_board[players[1]]))
     print("--------------------------------\n")
 
-#to draw the board
-def draw_board(board):
-    board[0]=-1
+#to draw the grid
+def draw_grid(grid):
+    grid[0]=-1
     #draw first row
     print(" _________________")
     print("|     |     |     |")
-    print("|  "+board[1]+"  |  "+board[2]+"  |  "+board[3]+"  |")
+    print("|  "+grid[1]+"  |  "+grid[2]+"  |  "+grid[3]+"  |")
     print("|_____|_____|_____|")
     
     #draw second row
     print("|     |     |     |")
-    print("|  "+board[4]+"  |  "+board[5]+"  |  "+board[6]+"  |")
+    print("|  "+grid[4]+"  |  "+grid[5]+"  |  "+grid[6]+"  |")
     print("|_____|_____|_____|")
     
     #draw third row
     print("|     |     |     |")
-    print("|  "+board[7]+"  |  "+board[8]+"  |  "+board[9]+"  |")
+    print("|  "+grid[7]+"  |  "+grid[8]+"  |  "+grid[9]+"  |")
     print("|_____|_____|_____|")
     
-    return board
+    return grid
 
 #Check if a specific player is the winner
-def is_winner(board,letter):
-    return (board[1] == letter and board[2] == letter and board[3] == letter) or \
-    (board[4] == letter and board[5] == letter and board[6] == letter) or \
-    (board[7] == letter and board[8] == letter and board[9] == letter) or \
-    (board[1] == letter and board[4] == letter and board[7] == letter) or \
-    (board[2] == letter and board[5] == letter and board[8] == letter) or \
-    (board[3] == letter and board[6] == letter and board[9] == letter) or \
-    (board[1] == letter and board[5] == letter and board[9] == letter) or \
-    (board[3] == letter and board[5] == letter and board[7] == letter)
+def is_winner(grid,letter):
+    return (grid[1] == letter and grid[2] == letter and grid[3] == letter) or \
+    (grid[4] == letter and grid[5] == letter and grid[6] == letter) or \
+    (grid[7] == letter and grid[8] == letter and grid[9] == letter) or \
+    (grid[1] == letter and grid[4] == letter and grid[7] == letter) or \
+    (grid[2] == letter and grid[5] == letter and grid[8] == letter) or \
+    (grid[3] == letter and grid[6] == letter and grid[9] == letter) or \
+    (grid[1] == letter and grid[5] == letter and grid[9] == letter) or \
+    (grid[3] == letter and grid[5] == letter and grid[7] == letter)
 
 #Repeat the game
 def repeat_game():
@@ -72,7 +72,7 @@ def repeat_game():
     return repeat
 
 #Take player input
-def player_input(curr_player,board,letter):
+def player_input(curr_player,grid,letter):
     while True:
         try:
             position=int(input(curr_player+",select a position (1-9) to place an "+letter+" : " ))
@@ -83,66 +83,67 @@ def player_input(curr_player,board,letter):
             
     while True:
         #check if user selects out of range position
-        if (position not in range(1,10)) or (board[position] != " "):
+        if (position not in range(1,10)) or (grid[position] != " "):
             position=int(input(curr_player+",please, choose another position to place an "+letter+" from 1 to 9 :"))
         else:
             break
-    insert_letter(board,letter,position) #insert the letter(X or O) in the position on the board
+    insert_letter(grid,letter,position) #insert the letter(X or O) in the position on the grid
     
 #Play the game
-def play_game(board,player1,player2,score_board):
+def play_game(grid,player1,player2,score_board):
     curr_player=player1
     player1_letter, player2_letter= select_letter(player1)
-    #clean the board
-    board=[" " for i in range(10)] #create an array to store the values in the board
-    board=draw_board(board)
-    #check if there are empty positions on the board
-    while is_board_full(board) == False:
+    #clean the grid
+    grid=[" " for i in range(10)] #create an array to store the values in the grid
+    grid=draw_grid(grid)
+    #check if there are empty positions on the grid
+    while is_grid_full(grid) == False:
         if curr_player==player1:
-            player_input(player1,board,player1_letter)
+            player_input(player1,grid,player1_letter)
             curr_player=player2
         else:
-            player_input(player2,board,player2_letter)
+            player_input(player2,grid,player2_letter)
             curr_player=player1
-        #draw the board
-        board=draw_board(board)
+        #draw the grid
+        grid=draw_grid(grid)
 
         #check if player 1 is winner
-        if is_winner(board,player1_letter):
-            print("\n Congratulations!"+player1+" Won.")
+        if is_winner(grid,player1_letter):
+            print("\n Congratulations! "+player1.upper()+" Won.")
             score_board[player1] = score_board[player1] + 1
             print_scoreboard(score_board)
             return repeat_game()
         #check if player 2 is winner
-        elif is_winner(board,player2_letter):
+        elif is_winner(grid,player2_letter):
             score_board[player2] = score_board[player2] + 1
-            print("\n Congratulations!"+player2+" Won.")
+            print("\n Congratulations! "+player2.upper()+" Won.")
             print_scoreboard(score_board)
             return repeat_game()
 
-    #if " " not in board:
-    if is_board_full(board):
+    #if " " not in grid:
+    if is_grid_full(grid):
         print("\n Its a Draw :(")
         print_scoreboard(score_board)
         return repeat_game()
 
 #Start the game
-print("Let play Tic Tac Toe")
-repeat="y"
-board=[" " for i in range(10)] #create an array to store the values in the board
-board=draw_board(board)
-while True:
-    player1=input("Enter player 1 name: ")
-    player2=input("Enter player 2 name: ")
-    if player1=='' or player2=='' or (not player1.isalpha()) or (not player2.isalpha()) : #check if layer name is '' or is not alphabetic
-        print("Come On! You definitely have a name.Even nickname will be cool ;).")
-    else:
-        if player1==player2:
-            print("Hey! Give some unique names!")
+if __name__=="__main__":
+    print("Lets play Tic Tac Toe")
+    repeat="y"
+    grid=[" " for i in range(10)] #create an array to store the values in the grid
+    grid=draw_grid(grid)
+    while True:
+        player1=input("Enter player 1 name: ")
+        player2=input("Enter player 2 name: ")
+        if player1=='' or player2=='' or (not player1.isalpha()) or (not player2.isalpha()) : #check if layer name is '' or is not alphabetic
+            print("Come On! You definitely have a name.Even nickname will be cool ;).")
         else:
-            break
+            if player1==player2:
+                print("Hey! Give some unique names!")
+            else:
+                break
 
-score_board={player1:0,player2:0} #initialize scoreboard
-print_scoreboard(score_board)
-while(repeat.lower()=="y"):
-    repeat=play_game(board,player1,player2,score_board)
+    score_board={player1:0,player2:0} #initialize scoreboard
+    print_scoreboard(score_board)
+    while(repeat.lower()=="y"):
+        repeat=play_game(grid,player1,player2,score_board)
