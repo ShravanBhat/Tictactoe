@@ -1,3 +1,39 @@
+import random
+
+#to ask user to choose a letter
+def select_letter(player1):
+    let=""
+    auto_let=""
+    #ask user to select a letter (X or O)
+    while(let != "x" and let != "o"):
+        let=input("Hey "+player1+"!Select X or O: ").replace(" ","").strip().lower()
+        if let == "x":
+            auto_let="o"
+        else:
+            auto_let="x"
+    return let, auto_let
+
+
+#to check if board is full
+def is_board_full(board):
+    return board.count(" ")==0
+
+#to insert a letter (X or O) in a specific position
+def insert_letter(board,letter,pos):
+    board[pos]=letter
+def print_scoreboard(score_board):
+    print("--------------------------------")
+    print("            SCOREBOARD          ")
+    print("--------------------------------")
+    
+    players = list(score_board.keys())
+    print('{:<25} {}'.format(players[0], score_board[players[0]]))
+    print('{:<25} {}'.format(players[1], score_board[players[1]]))
+
+ 
+    print("--------------------------------\n")
+
+#to draw the board
 def draw_board(board):
     board[0]=-1
     #draw first row
@@ -16,152 +52,96 @@ def draw_board(board):
     print("    |     |    ")
     
     return board
+
+#to check if a specific player is the winner
 def is_winner(board,letter):
-    return  (board[1] == letter and board[2] == letter and board[3] == letter) or \
-            (board[4] == letter and board[5] == letter and board[6] == letter) or \
-            (board[7] == letter and board[8] == letter and board[9] == letter) or \
-            (board[1] == letter and board[4] == letter and board[7] == letter) or \
-            (board[2] == letter and board[5] == letter and board[8] == letter) or \
-            (board[3] == letter and board[6] == letter and board[9] == letter) or \
-            (board[1] == letter and board[5] == letter and board[9] == letter) or \
-            (board[3] == letter and board[5] == letter and board[7] == letter)
-def play_game():
-    # Represents the Tic Tac Toe
-    board = [' ' for x in range(9)]
-     
-    # Stores the positions occupied by X and O
-    player_pos = {'X':[], 'O':[]}
-     
-    # Game Loop for a single game of Tic Tac Toe
+    return (board[1] == letter and board[2] == letter and board[3] == letter) or \
+    (board[4] == letter and board[5] == letter and board[6] == letter) or \
+    (board[7] == letter and board[8] == letter and board[9] == letter) or \
+    (board[1] == letter and board[4] == letter and board[7] == letter) or \
+    (board[2] == letter and board[5] == letter and board[8] == letter) or \
+    (board[3] == letter and board[6] == letter and board[9] == letter) or \
+    (board[1] == letter and board[5] == letter and board[9] == letter) or \
+    (board[3] == letter and board[5] == letter and board[7] == letter)
+
+#to repeat the game
+def repeat_game():
+    
+    repeat=input("Play again? Press y for yes and n for no: ")
+    while repeat != "n" and repeat != "y":
+        repeat=input("PLEASE, press y for yes and n for no: ")
+    return repeat
+
+def player_input(curr_player,board,letter):
     while True:
-        draw_board(board)
-         
-        # Try exception block for MOVE input
         try:
-            print("Player ", cur_player, " turn. Which box? : ", end="")
-            move = int(input()) 
-        except ValueError:
-            print("Wrong Input!!! Try Again")
-            continue
- 
-        # Sanity check for MOVE inout
-        if move < 1 or move > 9:
-            print("Wrong Input!!! Try Again")
-            continue
- 
-        # Check if the box is not occupied already
-        if board[move-1] != ' ':
-            print("Place already filled. Try again!!")
-            continue
- 
-        # Update game information
- 
-        # Updating grid status 
-        board[move-1] = cur_player
- 
-        # Updating player positions
-        player_pos[cur_player].append(move)
- 
-        # Function call for checking win
-        if is_winner(player_pos, cur_player):
-            print_tic_tac_toe(values)
-            print("Player ", cur_player, " has won the game!!")     
-            print("\n")
-            return cur_player
- 
-        # Function call for checking draw game
-        if check_draw(player_pos):
-            print_tic_tac_toe(values)
-            print("Game Drawn")
-            print("\n")
-            return 'D'
- 
-        # Switch player moves
-        if cur_player == 'X':
-            cur_player = 'O'
-        else:
-            cur_player = 'X'
-
-def start_game(player1,player2):
-    score_board={player1:0,player2:0}
-    print_scoreboard(score_board)
-    current_player=player1 #store current player name
-    player_choice={'X':"",'O':""} #store player choices
-    options = ['X', 'O']
-
-    while True:
-        print("Turn to choose for", current_player)
-        print("Enter 1 for X")
-        print("Enter 2 for O")
-        print("Enter 3 to Quit")
-        try:
-            choice = int(input())   
-        except ValueError:
-            print("Wrong Input!!! Try Again\n")
-            continue
-        if choice == 1:
-            player_choice['X'] = current_player
-            if current_player == player1:
-                player_choice['O'] = player2
-            else:
-                player_choice['O'] = player1
-
-        elif choice == 2:
-            player_choice['O'] = current_player
-            if current_player == player1:
-                player_choice['X'] = player2
-            else:
-                player_choice['X'] = player1
+            position=int(input(curr_player+",select a position (1-9) to place an "+letter+" : " ))
             
-        elif choice == 3:
-            print("Final Scores")
+        except:
+            continue
+        else:
+            break
+            
+    while True:
+        #check if user selects out of range position
+        if (position not in range(1,10)) or (board[position] != " "):
+            position=int(input(curr_player+",please, choose another position to place an "+letter+" from 1 to 9 :"))
+        else:
+            break
+    insert_letter(board,letter,position)
+    
+#to play the game
+def play_game(player1,player2,score_board):
+
+    curr_player=player1
+    letter, auto_letter= select_letter(player1)
+    #clean the board
+    board=[" " for i in range(10)] #create an array to store the values in the board
+    board=draw_board(board)
+    #check if there are empty positions on the board
+    while is_board_full(board) == False:
+        
+        if curr_player==player1:
+            player_input(player1,board,letter)
+            curr_player=player2
+        else:
+            player_input(player2,board,auto_letter)
+            curr_player=player1
+        #draw the board
+        board=draw_board(board)
+
+        if is_winner(board,letter):
+            print("Congratulations!"+player1+" Won.")
+            score_board[player1] = score_board[player1] + 1
             print_scoreboard(score_board)
-            break  
+            return repeat_game()
+        elif is_winner(board,auto_letter):
+            score_board[player2] = score_board[player2] + 1
+            print("Congratulations!"+player2+" Won.")
+            print_scoreboard(score_board)
+            return repeat_game()
 
-        else:
-            print("Wrong Choice!!!! Try Again\n")
-
-        # Stores the winner in a single game of Tic Tac Toe
-        winner = play_game(options[choice-1])
-            
-        # Edits the scoreboard according to the winner
-        if winner != 'Draw' :
-            player_won = player_choice[winner]
-            score_board[player_won] = score_board[player_won] + 1
-
+    #if " " not in board:
+    if is_board_full(board):
+        print("Tie Game :)")
         print_scoreboard(score_board)
-        # Switch player who chooses X or O
-        if current_player == player1:
-            current_player = player2
-        else:
-            current_player = player1
+        return repeat_game()
 
-def print_scoreboard(score_board):
-    print("\t--------------------------------")
-    print("\t            SCOREBOARD          ")
-    print("\t--------------------------------")
- 
-    players = list(score_board.keys())
-    print("\t   ", players[0], "\t    ", score_board[players[0]])
-    print("\t   ", players[1], "\t    ", score_board[players[1]])
- 
-    print("\t--------------------------------\n")
-
-
-print("Tic Tac Toe")
+#Start the game
+print("Welcome to Tic Tac Toe.")
+repeat="y"
+    
 while True:
-    game_type=input("Enter The game type.1 for computer 2 for 2 player")
-    if game_type=='1' or game_type=='2':
-        game_type=int(game_type)
-        break
-    else:
-        game_type=input("Please enter 1 for computer 2 for 2 player")
+    player1=input("Enter player 1 name: ")
+    player2=input("Enter player 2 name: ")
+    if player1!='' and player2!='':
+        if player1==player2:
+            print("Hey! Give some unique names!")
+        else:
+            break
+
+score_board={player1:0,player2:0}
+print_scoreboard(score_board)
+while(repeat=="y"):
     
-    
-if game_type==1:
-    player1=input("Enter player name")
-    player2="Computer"
-else:
-    player1=input("Enter player 1 name")
-    player2=input("Enter player 2 name")
-start_game(player1,player2)
+    repeat=play_game(player1,player2,score_board)
