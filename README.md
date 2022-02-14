@@ -13,6 +13,18 @@
 - python tictactoe_final.py 
 
 ### Funtions
+- tictactoe_2 player.py
+```
+main() : Takes player names
+play_game() : Main funtion which runs the flow of the game
+choose_letter() : Takes input of letter choice(X or O) from Player 1 and assigns the other letter to player 2
+draw_grid() : Prints the grid
+player_input() : Takes the player input for the position to place X or O
+is_winner() : Checks if the particular player won or not
+is_grid_full() : Checks if the grid has ay empty space or not.If grid is full then no one has won till now and its a draw
+print_scoreboard() : Prints the scoreboard containing player names and their respective scores
+repeat_game() : Repeat the game until user presses N
+```
 - tictactoe_final.py
 ```
 main() : Take extra input of game_type. 1 means single player and 2 means 2 player
