@@ -161,6 +161,8 @@ def play_game(game_type,grid,player1,player2,score_board):
                 curr_player=player1
         else:
             player_input(player1,grid,player1_letter)
+            print("\n Computer's Turn:")
+            grid=draw_grid(grid)
             computer(grid,player2_letter)
         #draw the grid
         grid=draw_grid(grid)
