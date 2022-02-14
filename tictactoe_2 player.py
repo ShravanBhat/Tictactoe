@@ -1,5 +1,6 @@
 #Funtion to ask user to choose a letter
-def select_letter(player1):
+
+def choose_letter(player1):
     player1_letter=""
     player2_letter=""
     #Ask user to select a letter (X or O)
@@ -83,8 +84,11 @@ def player_input(curr_player,grid,letter):
             
     while True:
         #check if user selects out of range position
-        if (position not in range(1,10)) or (grid[position] != " "):
-            position=int(input(curr_player+",please, choose another position to place an "+letter+" from 1 to 9 :"))
+        try:
+            if (position not in range(1,10)) or (grid[position] != " "):
+                position=int(input(curr_player+",please, choose another position to place an "+letter+" from 1 to 9 :"))
+        except:
+            continue
         else:
             break
     insert_letter(grid,letter,position) #insert the letter(X or O) in the position on the grid
@@ -92,7 +96,7 @@ def player_input(curr_player,grid,letter):
 #Play the game
 def play_game(grid,player1,player2,score_board):
     curr_player=player1
-    player1_letter, player2_letter= select_letter(player1)
+    player1_letter, player2_letter= choose_letter(player1)
     #clean the grid
     grid=[" " for i in range(10)] #create an array to store the values in the grid
     grid=draw_grid(grid)
