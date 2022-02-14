@@ -1,5 +1,7 @@
 import random
 #Funtion to ask user to choose a letter
+class Invalidinput(Exception):
+    pass
 def choose_letter(player1):
     player1_letter=""
     player2_letter=""
@@ -11,6 +13,7 @@ def choose_letter(player1):
             player2_letter="o"
         else:
             player2_letter="x"
+        
     return player1_letter, player2_letter
 
 
@@ -126,6 +129,7 @@ def player_input(curr_player,grid,letter):
         try:
             position=int(input(curr_player+",select a position (1-9) to place an "+letter+" : " ))
         except:
+            raise Exception()
             continue
         else:
             break
