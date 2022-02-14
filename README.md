@@ -6,13 +6,14 @@
 ### Files
 - tictacoe_2 player.py is 1.0 Release. It is a multiplayer game.<br/>
 - tictactoe_final.py is final Release.One can play with computer as well as with a human.
+- tests_all_unit.py -Used for testing purposes
 
 ### How to play
 - Clone the repo<br/>
 - Open the terminal<br/>
 - python tictactoe_final.py 
 
-### Funtions
+### Explanation of Funtions in the above programs
 - tictactoe_2 player.py
 ```
 main() : Takes player names
