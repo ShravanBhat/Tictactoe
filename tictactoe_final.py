@@ -1,7 +1,5 @@
 import random
 #Funtion to ask user to choose a letter
-class Invalidinput(Exception):
-    pass
 def choose_letter(player1):
     player1_letter=""
     player2_letter=""
@@ -119,7 +117,7 @@ def is_winner(grid,letter):
 def repeat_game():
     
     repeat=input("Play again? Press y for yes and n for no: ")
-    while repeat != "n" and repeat != "y":
+    while repeat.lower() != "n" and repeat.lower() != "y":
         repeat=input("PLEASE, press y for yes and n for no: ")
     return repeat
 
@@ -129,7 +127,6 @@ def player_input(curr_player,grid,letter):
         try:
             position=int(input(curr_player+",select a position (1-9) to place an "+letter+" : " ))
         except:
-            raise Exception()
             continue
         else:
             break
