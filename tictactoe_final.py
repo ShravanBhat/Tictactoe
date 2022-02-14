@@ -197,7 +197,7 @@ if __name__=="__main__":
     grid=[" " for i in range(10)] #create an array to store the values in the grid
     grid=draw_grid(grid)
     while True:
-        game_type=input("Enter:\n 1 to play vs Computer \n 2 to play with a human")
+        game_type=input("Enter:\n 1 to play vs Computer \n 2 to play with a human : ")
         if game_type=='1' or game_type=='2':
             game_type=int(game_type)
             break
